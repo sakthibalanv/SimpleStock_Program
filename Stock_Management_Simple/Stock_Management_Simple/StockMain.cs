@@ -47,6 +47,20 @@ namespace Stock_Management_Simple
             
         }
 
+        private void productListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportForm.ProductReport rpt = new ReportForm.ProductReport();
+            rpt.MdiParent = this;
+            rpt.Show();
+        }
+
+        private void stockListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportForm.StockReport rpt = new ReportForm.StockReport();
+            rpt.MdiParent = this;
+            rpt.Show();
+        }
+
        
     }
 }
