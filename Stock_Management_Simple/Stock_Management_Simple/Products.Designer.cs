@@ -28,19 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.tb_ProductCode = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.bt_Delete = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tb_ProductName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.bt_Add = new System.Windows.Forms.Button();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bt_Reset = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -72,7 +76,7 @@
             // 
             // bt_Delete
             // 
-            this.bt_Delete.Location = new System.Drawing.Point(438, 61);
+            this.bt_Delete.Location = new System.Drawing.Point(422, 61);
             this.bt_Delete.Name = "bt_Delete";
             this.bt_Delete.Size = new System.Drawing.Size(75, 37);
             this.bt_Delete.TabIndex = 3;
@@ -94,6 +98,22 @@
             this.dataGridView1.Size = new System.Drawing.Size(620, 315);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseDoubleClick);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Product Code";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "Product Name";
+            this.Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Status";
+            this.Column3.Name = "Column3";
             // 
             // tb_ProductName
             // 
@@ -122,7 +142,7 @@
             // 
             // bt_Add
             // 
-            this.bt_Add.Location = new System.Drawing.Point(530, 61);
+            this.bt_Add.Location = new System.Drawing.Point(503, 61);
             this.bt_Add.Name = "bt_Add";
             this.bt_Add.Size = new System.Drawing.Size(75, 37);
             this.bt_Add.TabIndex = 8;
@@ -130,27 +150,26 @@
             this.bt_Add.UseVisualStyleBackColor = true;
             this.bt_Add.Click += new System.EventHandler(this.bt_Add_Click);
             // 
-            // Column1
+            // bt_Reset
             // 
-            this.Column1.HeaderText = "Product Code";
-            this.Column1.Name = "Column1";
+            this.bt_Reset.Location = new System.Drawing.Point(568, 12);
+            this.bt_Reset.Name = "bt_Reset";
+            this.bt_Reset.Size = new System.Drawing.Size(75, 37);
+            this.bt_Reset.TabIndex = 9;
+            this.bt_Reset.Text = "Reset";
+            this.bt_Reset.UseVisualStyleBackColor = true;
+            this.bt_Reset.Click += new System.EventHandler(this.bt_Reset_Click);
             // 
-            // Column2
+            // errorProvider1
             // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "Product Name";
-            this.Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Status";
-            this.Column3.Name = "Column3";
+            this.errorProvider1.ContainerControl = this;
             // 
             // Products
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(655, 569);
+            this.Controls.Add(this.bt_Reset);
             this.Controls.Add(this.bt_Add);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tb_ProductName);
@@ -164,6 +183,7 @@
             this.Text = "Products";
             this.Load += new System.EventHandler(this.Products_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -183,5 +203,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.Button bt_Reset;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

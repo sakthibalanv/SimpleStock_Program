@@ -28,7 +28,7 @@ namespace Stock_Management_Simple
 
         private void bt_Login_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("Data Source=LAPTOP-391RUUKR\\SQLEXPRESS;Initial Catalog=Stock;Integrated Security=True");
+            SqlConnection con = Connection.GetConnection();
             string query = "SELECT * FROM Login where UserName = '" + tb_UserName.Text + "' and Password = '" + tb_Password.Text + "'";
            // SqlDataAdapter sda = new SqlDataAdapter(@"SELECT * FROM [dbo].[Login] where UserName='admin' and Password='admin@123'", con);
             SqlDataAdapter sda = new SqlDataAdapter(query, con);

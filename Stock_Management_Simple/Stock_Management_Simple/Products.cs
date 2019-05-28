@@ -14,7 +14,7 @@ namespace Stock_Management_Simple
 {
     public partial class Products : Form
     {
-        SqlConnection con = new SqlConnection("Data Source=LAPTOP-391RUUKR\\SQLEXPRESS;Initial Catalog=Stock;Integrated Security=True");
+        
 
         public Products()
         {
@@ -41,23 +41,39 @@ namespace Stock_Management_Simple
 
                     
 
-            showDataTable();
+            showDataTable();            
+            resetControls();
+        }
+
+        private void resetControls()
+        {
+            tb_ProductCode.Clear();
+            tb_ProductName.Clear();
+            comboBox1.SelectedIndex = -1;
+            bt_Add.Text = "Add";
+            tb_ProductCode.Focus();
         }
 
         private void updateRecord()
         {
-            con.Open();
-            bool status = comboBox1.SelectedIndex == 0 ? true : false;
-            string query = "UPDATE [Products] SET [ProductName] = '" + tb_ProductName.Text + "', [ProductStatus] = '" + status + "' where [ProductCode] = '" + tb_ProductCode.Text + "'" ;
+            if (validation())
+            {
+                SqlConnection con = Connection.GetConnection();
+                con.Open();
+                bool status = comboBox1.SelectedIndex == 0 ? true : false;
+                string query = "UPDATE [Products] SET [ProductName] = '" + tb_ProductName.Text + "', [ProductStatus] = '" + status + "' where [ProductCode] = '" + tb_ProductCode.Text + "'";
 
-            SqlCommand cmd = new SqlCommand(query, con);
-            cmd.ExecuteNonQuery();
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.ExecuteNonQuery();
 
-            con.Close();
+                con.Close();
+            }
+            
         }
 
         private bool ifProductExists(string productCode)
         {
+            SqlConnection con = Connection.GetConnection();
             SqlDataAdapter sda = new SqlDataAdapter("select * from [Stock].[dbo].[Products] where [ProductCode] = '" + productCode + "'", con);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -74,18 +90,24 @@ namespace Stock_Management_Simple
 
         private void addRecord()
         {
-            con.Open();
-            bool status = comboBox1.SelectedIndex == 0 ? true : false;
-            string query = "INSERT INTO Products ([ProductCode],[ProductName],[ProductStatus]) VALUES ('" + tb_ProductCode.Text + "','" + tb_ProductName.Text + "','" + status + "')";
+            if (validation())
+            {
+                SqlConnection con = Connection.GetConnection();
+                con.Open();
+                bool status = comboBox1.SelectedIndex == 0 ? true : false;
+                string query = "INSERT INTO Products ([ProductCode],[ProductName],[ProductStatus]) VALUES ('" + tb_ProductCode.Text + "','" + tb_ProductName.Text + "','" + status + "')";
 
-            SqlCommand cmd = new SqlCommand(query, con);
-            cmd.ExecuteNonQuery();
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.ExecuteNonQuery();
 
-            con.Close();
+                con.Close();
+            }
+            
         }
 
         private void showDataTable()
         {
+            SqlConnection con = Connection.GetConnection();
             SqlDataAdapter sda = new SqlDataAdapter("select * from [Stock].[dbo].[Products]", con);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -109,6 +131,8 @@ namespace Stock_Management_Simple
 
         private void dataGridView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            bt_Add.Text = "Update";
+
             tb_ProductCode.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
             tb_ProductName.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
 
@@ -137,14 +161,56 @@ namespace Stock_Management_Simple
 
         private void deleteRecord()
         {
-            con.Open();
-            bool status = comboBox1.SelectedIndex == 0 ? true : false;
-            string query = "Delete From Products where [ProductCode] = '" + tb_ProductCode.Text + "'";
+            DialogResult result = MessageBox.Show("Are you sure to delete this record ?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            SqlCommand cmd = new SqlCommand(query, con);
-            cmd.ExecuteNonQuery();
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                if (validation())
+                {
+                    SqlConnection con = Connection.GetConnection();
+                    con.Open();
+                    bool status = comboBox1.SelectedIndex == 0 ? true : false;
+                    string query = "Delete From Products where [ProductCode] = '" + tb_ProductCode.Text + "'";
 
-            con.Close();
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.ExecuteNonQuery();
+
+                    con.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Record not found...");
+                }
+            }
+           
+        }
+
+        private void bt_Reset_Click(object sender, EventArgs e)
+        {
+            resetControls();
+        }
+
+        private bool validation()
+        {
+            bool result = false;
+            errorProvider1.Clear();
+            if (string.IsNullOrEmpty(tb_ProductCode.Text))
+            {
+                errorProvider1.SetError(tb_ProductCode, "Product Code Required");
+            }
+            else if (string.IsNullOrEmpty(tb_ProductName.Text))
+            {
+                errorProvider1.SetError(tb_ProductName, "Product Name Required");
+            }
+            else if (comboBox1.SelectedIndex == -1)
+            {
+                errorProvider1.SetError(comboBox1, "Select Status");
+            }
+            else
+            {
+                result = true;
+            }            
+            return result;
         }
     }
 }

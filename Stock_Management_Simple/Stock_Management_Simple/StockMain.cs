@@ -26,10 +26,25 @@ namespace Stock_Management_Simple
             prod.Show();
         }
 
-
+        bool close = true;
         private void StockMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            if (close)
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to exit ?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    close = false;
+                    Application.Exit();
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            
+            
         }
 
        
