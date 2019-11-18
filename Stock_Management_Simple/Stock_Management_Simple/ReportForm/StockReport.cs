@@ -1,4 +1,4 @@
-﻿using CrystalDecisions.CrystalReports.Engine;
+﻿//using CrystalDecisions.CrystalReports.Engine;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ namespace Stock_Management_Simple.ReportForm
 {
     public partial class StockReport : Form
     {
-        ReportDocument crrpt = new ReportDocument();
+        //ReportDocument crrpt = new ReportDocument();
 
         public StockReport()
         {
